@@ -11,7 +11,6 @@ public static class TokenHelper
 {
     public static string GenerateAccessToken(User user, IConfiguration config)
     {
-        Console.WriteLine("KEY: " + config["Jwt:Key"]);
         var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["Jwt:Key"]));
         var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
