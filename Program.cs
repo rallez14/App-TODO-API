@@ -4,9 +4,11 @@ using App_TODO_API.Requests;
 using App_TODO_API.Services;
 
 var builder = WebApplication.CreateBuilder(args);
+var config = builder.Configuration;
 
 // Add services to the container.
 builder.Services.AddScoped<RegisterService>();
+builder.Services.AddScoped<LoginService>();
 
 var app = builder.Build();
 
@@ -15,6 +17,7 @@ var app = builder.Build();
 app.UseHttpsRedirection();
 
 app.MapRegisterEndpoint();
+app.MapLoginEndpoint();
 
 
 app.Run();

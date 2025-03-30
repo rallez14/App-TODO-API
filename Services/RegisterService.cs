@@ -15,10 +15,10 @@ public class RegisterService
         }
 
         // Hash the password
-        await PasswordHelper.HashPassword(password);
+        var hashedPassword = await PasswordHelper.HashPassword(password);
 
         // Create a new user
-        var user = new User(name, email, password);
+        var user = new User(null, name, email, hashedPassword);
 
         // Save the user to the database
         await DbManager.AddUser(user);
