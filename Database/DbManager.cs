@@ -74,10 +74,10 @@ public abstract class DbManager
         if (reader.Read())
         {
             var user = new User(
-                reader.GetInt32(0),             // Id
+                reader.GetInt32(0),               // Id
                 reader.GetString(1),            // Name
                 reader.GetString(2),            // Email
-                reader.GetString(3)             // Password
+                reader.GetString(3)          // Password
             );
             return user;
         }

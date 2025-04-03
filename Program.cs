@@ -1,6 +1,7 @@
 using System.Security.Claims;
 using System.Text;
 using System.Text.Json;
+using App_TODO_API.Database;
 using App_TODO_API.Map;
 using App_TODO_API.Requests;
 using App_TODO_API.Services;
@@ -44,10 +45,17 @@ app.MapRegisterEndpoint();
 app.MapLoginEndpoint();
 app.MapRefreshEndpoint();
 
-app.MapGet("/me", [Authorize] (ClaimsPrincipal user) =>
+app.MapGet("/me", [Authorize] async (ClaimsPrincipal user) =>
 {
-    var userId = user.FindFirst("userId")?.Value;
-    return $"Jesteś zalogowany jako ID: {userId}";
+    var id = int.Parse(user.FindFirst("userId")!.Value);
+    var dbUser = await DbManager.GetUserById(id);
+
+    return new
+    {
+        id = dbUser.Id,
+        name = dbUser.Name,
+        email = dbUser.Email
+    };
 });
 
 

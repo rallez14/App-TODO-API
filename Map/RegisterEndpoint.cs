@@ -8,9 +8,9 @@ namespace App_TODO_API.Map;
 
 public static class RegisterEndpoint
 {
-    public static void MapRegisterEndpoint(this WebApplication app )
+    public static void MapRegisterEndpoint(this WebApplication app)
     {
-        app.MapPost("/register", async ([FromServices] RegisterService registerService, [FromBody] RegisterRequest request) =>
+        app.MapPost("/api/register", async ([FromServices] RegisterService registerService, [FromBody] RegisterRequest request) =>
         {
             if (string.IsNullOrWhiteSpace(request.Name))
                 return Results.BadRequest("Missing Name field");
@@ -23,7 +23,7 @@ public static class RegisterEndpoint
 
             var result = await registerService.Register(request.Name, request.Email, request.Password);
 
-            return result ? Results.Ok("OK") : Results.BadRequest("User already exists");
+            return result ? Results.Ok("OK") : Results.Problem("User already exists", statusCode: 409);
         });
 
 
